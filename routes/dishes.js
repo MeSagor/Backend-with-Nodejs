@@ -10,17 +10,14 @@ const dishes = [
 ]
 
 router.get('/', (req, res) => {
-    res.send('Hello. we are in Home')
-})
-router.get('/dishes', (req, res) => {
     res.send(dishes)
 })
-router.get('/dishes/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     const dish = dishes.find(d => d.id === parseInt(req.params.id))
     if (!dish) res.status(404).send('The Dish with given id was not found..!')
     else res.send(dish)
 })
-router.post('/dishes', (req, res) => {
+router.post('/', (req, res) => {
 
     const result = validateDish(req.body)
     // console.log(result)
@@ -36,7 +33,7 @@ router.post('/dishes', (req, res) => {
     dishes.push(dish)
     res.send(dish)
 })
-router.put('/dishes/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     const dish = dishes.find(d => d.id === parseInt(req.params.id))
     if (!dish) {
         res.status(404).send('The Dish with given id was not found..!')
@@ -54,7 +51,7 @@ router.put('/dishes/:id', (req, res) => {
     res.send(dish)
 
 })
-router.delete('/dishes/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const dish = dishes.find(d => d.id === parseInt(req.params.id))
     if (!dish) {
         res.status(404).send('The Dish with given id was not found..!')
