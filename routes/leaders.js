@@ -7,7 +7,10 @@ const leaders = [
     {id: 1, name: 'Akif'},
     {id: 2, name: 'Opi'},
     {id: 3, name: 'Sagor'},
-    {id: 4, name: 'Pranto'}
+    {id: 4, name: 'Pranto'},
+    {id: 5, name: 'raju'},
+    {id: 6, name: 'Thohid'},
+    {id: 7, name: 'Hemel'}
 ]
 
 router.get('/', (req, res) => {

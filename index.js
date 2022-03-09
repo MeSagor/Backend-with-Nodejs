@@ -5,7 +5,7 @@ const promotionsRouter = require('./routes/promotions')
 const leadersRouter = require('./routes/leaders')
 
 app.get('/', (req, res) => {
-    res.send("We are at HOME")
+    res.send("<h1>We are at Shop Door.Please Enter...</h1>")
 })
 app.use('/dishes', dishesRouter)
 app.use('/promotions', promotionsRouter)

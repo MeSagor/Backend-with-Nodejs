@@ -6,7 +6,9 @@ router.use(express.json())
 const promotions = [
     {id: 1, name: '10% Discount on Barger'},
     {id: 2, name: 'Buy 3, Get 1 on Grill'},
-    {id: 3, name: 'Order 5 parcel and get 1 parcel free on Kala-vhuna'}
+    {id: 3, name: 'Order 5 parcel and get 1 parcel free on Kala-vhuna'},
+    {id: 4, name: '-30% Discount on Briani'},
+    {id: 5, name: 'Order 1 parcel and get no parcel at all on No Food'}
 ]
 
 router.get('/', (req, res) => {

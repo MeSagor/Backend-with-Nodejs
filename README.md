@@ -1,15 +1,90 @@
-***Very beginning of Backend programming by Nodejs***
+# <center>REST Api</center>
 
-**Creating `RestApi`**
+This Project is all about making a Rest Api where a user hits some end-points and gets some responses(json data) from the
+Api.
 
-**Here when you hit some endpoints, you will get some `json` data.**
+## Built With
 
-**Example:**
+- [Node](https://nodejs.org/en/)
+- [Express](https://expressjs.com)
+- [Joi](https://www.npmjs.com/package/joi)
+- [Javascript](https://www.w3schools.com/js/)
+- [WebStorm](https://www.jetbrains.com/webstorm/)
 
-`http://localhost:3000/dishes/2` will send you the second dish
-from dishes list as
-`{"id":2,"name":"Grill"}`.
+## Features
 
-**You Can operate `GET`,`POST`,`PUT`, and `DELETE` operation**
+- API calling works on `GET` `POST` `PUT` and `DELETE` methods
 
-Feel free to contribute...🙂..
+## Getting Started
+
+Clone down this repository. You will need `node.js` and `git` installed globally on your machine.
+
+## 🛠 Installation and Setup Instructions
+
+* First, clone this repository
+
+  via **HTTPS**
+  ```sh
+  https://github.com/MeSagor/Backend-with-Nodejs.git
+  ```
+  or via **SSH**
+  ```sh
+  git@github.com:MeSagor/Backend-with-Nodejs.git
+  ```
+
+* Go inside that folder
+  ```sh
+  cd Backend-with-Nodejs
+  ```
+
+* Install required Node Modules
+  ```sh
+  npm install
+  ```
+* Start Server
+  ```sh
+  npm start
+  ```
+
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+## Supported Links
+
+  ```sh
+  http://localhost:3000/
+  ```
+
+ ```sh
+  http://localhost:3000/dishes
+  ```
+
+ ```sh
+  http://localhost:3000/dishes/2
+  ```
+
+ ```sh
+  http://localhost:3000/promotions
+  ```
+
+ ```sh
+  http://localhost:3000/promotions/2
+  ```
+
+ ```sh
+  http://localhost:3000/leaders
+  ```
+
+ ```sh
+  http://localhost:3000/leaders/2
+  ```
+
+### Show your support
+Give a ⭐ if you like this PROJECT...🙂...!\
+
+If you are interested in this project and want to modify as your wish Or, you have an optimized version of this
+project then That will be great to merge up your new Features.\
+**PLEASE FEEL FREE TO CONTRIBUTE ON THIS PROJECT**
+
+<div style="text-align: center;color: green"><h1>Thanks</h1></div>
+
+

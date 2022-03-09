@@ -6,7 +6,11 @@ router.use(express.json())
 const dishes = [
     {id: 1, name: 'Barger'},
     {id: 2, name: 'Grill'},
-    {id: 3, name: 'Kala-vhuna'}
+    {id: 3, name: 'Kala-vhuna'},
+    {id: 4, name: 'Briani'},
+    {id: 5, name: 'Kacchi'},
+    {id: 6, name: 'No Food'},
+    {id: 7, name: 'Guri-Latthi'}
 ]
 
 router.get('/', (req, res) => {
