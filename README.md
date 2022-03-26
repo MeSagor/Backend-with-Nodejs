@@ -1,7 +1,7 @@
-# <center>REST Api</center>
+<h1 align="center">REST Api</h1>
 
-This Project is all about making a Rest Api where a user hits some end-points and gets some responses(json data) from the
-Api.
+This Project is all about making a Rest Api where a user hits some end-points and gets some responses(json data) from
+the Api.
 
 ## Built With
 
@@ -48,43 +48,47 @@ Clone down this repository. You will need `node.js` and `git` installed globally
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Supported Links
+## Supported EndPoints
 
   ```sh
-  http://localhost:3000/
+http://localhost:3000/
   ```
 
  ```sh
-  http://localhost:3000/dishes
+http://localhost:3000/dishes
   ```
 
  ```sh
-  http://localhost:3000/dishes/2
+http://localhost:3000/dishes/2
   ```
 
  ```sh
-  http://localhost:3000/promotions
+http://localhost:3000/promotions
   ```
 
  ```sh
-  http://localhost:3000/promotions/2
+http://localhost:3000/promotions/2
   ```
 
  ```sh
-  http://localhost:3000/leaders
+http://localhost:3000/leaders
   ```
 
  ```sh
-  http://localhost:3000/leaders/2
+http://localhost:3000/leaders/2
   ```
 
 ### Show your support
-Give a ⭐ if you like this PROJECT...🙂...!\
 
-If you are interested in this project and want to modify as your wish Or, you have an optimized version of this
-project then That will be great to merge up your new Features.\
+Give a ⭐ if you like this PROJECT...🙂...!
+
+If you are interested in this project and want to modify as your wish Or, you have an optimized version of this project
+then That will be great to merge up your new Features.\
 **PLEASE FEEL FREE TO CONTRIBUTE ON THIS PROJECT**
 
-<div style="text-align: center;color: green"><h1>Thanks</h1></div>
+<h1 align="center" style="color: green">Thanks</h1>
+
+
+
 
 
