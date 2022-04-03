@@ -1,79 +1,60 @@
 const express = require('express')
-const Joi = require('joi')
 const router = express.Router();
 router.use(express.json())
+const Dishes = require('../models/dishesSchema')
 
-const dishes = [
-    {id: 1, name: 'Barger'},
-    {id: 2, name: 'Grill'},
-    {id: 3, name: 'Kala-vhuna'},
-    {id: 4, name: 'Briani'},
-    {id: 5, name: 'Kacchi'},
-    {id: 6, name: 'No Food'},
-    {id: 7, name: 'Guri-Latthi'}
-]
 
 router.get('/', (req, res) => {
-    res.send(dishes)
+    Dishes.find()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
+
 router.get('/:id', (req, res) => {
-    const dish = dishes.find(d => d.id === parseInt(req.params.id))
-    if (!dish) res.status(404).send('The Dish with given id was not found..!')
-    else res.send(dish)
+    Dishes.find({id: req.params.id})
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
+
 router.post('/', (req, res) => {
-
-    const result = validateDish(req.body)
-    // console.log(result)
-    if (result.error) {
-        res.status(400).send(result.error.details[0].message)
-        return
-    }
-
-    const dish = {
-        id: dishes.length + 1,
-        name: req.body.name
-    }
-    dishes.push(dish)
-    res.send(dish)
+    const dish = new Dishes(req.body)
+    dish.save()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
+
 router.put('/:id', (req, res) => {
-    const dish = dishes.find(d => d.id === parseInt(req.params.id))
-    if (!dish) {
-        res.status(404).send('The Dish with given id was not found..!')
-        return
-    }
 
-    const result = validateDish(req.body)
-    // console.log(result)
-    if (result.error) {
-        res.status(400).send(result.error.details[0].message)
-        return
-    }
-
-    dish.name = req.body.name
-    res.send(dish)
-
+    Dishes.updateOne({id: req.params.id}, req.body)
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
+
 router.delete('/:id', (req, res) => {
-    const dish = dishes.find(d => d.id === parseInt(req.params.id))
-    if (!dish) {
-        res.status(404).send('The Dish with given id was not found..!')
-        return
-    }
 
-    const index = dishes.indexOf(dish)
-    dishes.splice(index, 1)
-
-    res.send(dish)
-
+    Dishes.deleteOne({id: req.params.id})
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
-
-function validateDish(dish) {
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
-    })
-    return schema.validate(dish)
-}
 
 module.exports = router

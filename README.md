@@ -1,4 +1,4 @@
-<h1 align="center">REST Api</h1>
+<h1 align="center">REST Api with Express and MongoDB</h1>
 
 This Project is all about making a Rest Api where a user hits some end-points and gets some responses(json data) from
 the Api.
@@ -7,7 +7,7 @@ the Api.
 
 - [Node](https://nodejs.org/en/)
 - [Express](https://expressjs.com)
-- [Joi](https://www.npmjs.com/package/joi)
+- [MongoDB](https://www.mongodb.com)
 - [Javascript](https://www.w3schools.com/js/)
 - [WebStorm](https://www.jetbrains.com/webstorm/)
 

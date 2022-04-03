@@ -1,79 +1,60 @@
 const express = require('express')
-const Joi = require('joi')
 const router = express.Router();
 router.use(express.json())
+const Leaders = require('../models/leaderSchema')
 
-const leaders = [
-    {id: 1, name: 'Akif'},
-    {id: 2, name: 'Opi'},
-    {id: 3, name: 'Sagor'},
-    {id: 4, name: 'Pranto'},
-    {id: 5, name: 'raju'},
-    {id: 6, name: 'Thohid'},
-    {id: 7, name: 'Hemel'}
-]
 
 router.get('/', (req, res) => {
-    res.send(leaders)
+    Leaders.find()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
+
 router.get('/:id', (req, res) => {
-    const leader = leaders.find(d => d.id === parseInt(req.params.id))
-    if (!leader) res.status(404).send('The Leader with given id was not found..!')
-    else res.send(leader)
+    Leaders.find({id: req.params.id})
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
+
 router.post('/', (req, res) => {
-
-    const result = validateDish(req.body)
-    // console.log(result)
-    if (result.error) {
-        res.status(400).send(result.error.details[0].message)
-        return
-    }
-
-    const leader = {
-        id: leaders.length + 1,
-        name: req.body.name
-    }
-    leaders.push(leader)
-    res.send(leader)
+    const leader = new Leaders(req.body)
+    leader.save()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
+
 router.put('/:id', (req, res) => {
-    const leader = leaders.find(d => d.id === parseInt(req.params.id))
-    if (!leader) {
-        res.status(404).send('The Leader with given id was not found..!')
-        return
-    }
 
-    const result = validateDish(req.body)
-    // console.log(result)
-    if (result.error) {
-        res.status(400).send(result.error.details[0].message)
-        return
-    }
-
-    leader.name = req.body.name
-    res.send(leader)
-
+    Leaders.updateOne({id: req.params.id}, req.body)
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
+
 router.delete('/:id', (req, res) => {
-    const leader = leaders.find(d => d.id === parseInt(req.params.id))
-    if (!leader) {
-        res.status(404).send('The Leader with given id was not found..!')
-        return
-    }
 
-    const index = leaders.indexOf(leader)
-    leaders.splice(index, 1)
-
-    res.send(leader)
-
+    Leaders.deleteOne({id: req.params.id})
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
-
-function validateDish(leader) {
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
-    })
-    return schema.validate(leader)
-}
 
 module.exports = router
