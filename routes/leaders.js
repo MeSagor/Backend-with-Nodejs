@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 router.use(express.json())
 const Leaders = require('../models/leaderSchema')
+const {authCheker} = require('./userAuth')
 
 
 router.get('/', (req, res) => {
@@ -15,7 +16,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    Leaders.find({id: req.params.id})
+    Leaders.find({_id: req.params.id})
         .then((result) => {
             res.send(result)
         })
@@ -24,37 +25,53 @@ router.get('/:id', (req, res) => {
         })
 })
 
-router.post('/', (req, res) => {
-    const leader = new Leaders(req.body)
-    leader.save()
-        .then((result) => {
-            res.send(result)
+router.post('/', authCheker, (req, res) => {
+    if (req.admin) {
+        const leader = new Leaders(req.body)
+        leader.save()
+            .then((result) => {
+                res.send(result)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    } else {
+        res.json({
+            message: "You aren't an admin and you have no permission...",
         })
-        .catch((err) => {
-            console.log(err)
-        })
+    }
 })
 
 router.put('/:id', (req, res) => {
-
-    Leaders.updateOne({id: req.params.id}, req.body)
-        .then((result) => {
-            res.send(result)
+    if (req.admin) {
+        Leaders.updateOne({_id: req.params.id}, req.body)
+            .then((result) => {
+                res.send(result)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    } else {
+        res.json({
+            message: "You aren't an admin and you have no permission...",
         })
-        .catch((err) => {
-            console.log(err)
-        })
+    }
 })
 
 router.delete('/:id', (req, res) => {
-
-    Leaders.deleteOne({id: req.params.id})
-        .then((result) => {
-            res.send(result)
+    if (req.admin) {
+        Leaders.deleteOne({_id: req.params.id})
+            .then((result) => {
+                res.send(result)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    } else {
+        res.json({
+            message: "You aren't an admin and you have no permission...",
         })
-        .catch((err) => {
-            console.log(err)
-        })
+    }
 })
 
 module.exports = router

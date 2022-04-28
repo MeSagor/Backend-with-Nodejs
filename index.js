@@ -1,17 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
+require('dotenv').config()
 const app = express()
 const dishesRouter = require('./routes/dishes')
 const promotionsRouter = require('./routes/promotions')
 const leadersRouter = require('./routes/leaders')
+const usersRouter = require('./routes/users')
 
-// const dbURL = 'mongodb+srv://bangbangshop:bangbangshop@cluster0.rwhnr.mongodb.net/s?retryWrites=true&w=majority'
-const dbURL = 'mongodb://127.0.0.1:27017/'
 
-mongoose.connect(dbURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then((result) => {
+mongoose.connect(process.env.DB_URL).then((result) => {
     console.log('Connected to the Database Successfully')
     app.listen(3000, () => {
         console.log('Listening on port 3000... ')
@@ -22,10 +19,11 @@ mongoose.connect(dbURL, {
 
 
 app.get('/', (req, res) => {
-    res.send("<h1>We are at Shop Door.Please Enter...</h1>")
+    res.send("<h1>Welcome to Gorib's Shop</h1>")
 })
 app.use('/dishes', dishesRouter)
 app.use('/promotions', promotionsRouter)
 app.use('/leaders', leadersRouter)
+app.use('/users', usersRouter)
 
 

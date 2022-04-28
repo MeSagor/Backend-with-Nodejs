@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 router.use(express.json())
 const Dishes = require('../models/dishesSchema')
+const {userAuth, adminAuth, userAuthDelete, authCheker} = require('./userAuth')
 
 
 router.get('/', (req, res) => {
@@ -10,51 +11,160 @@ router.get('/', (req, res) => {
             res.send(result)
         })
         .catch((err) => {
+            res.status(404)
             console.log(err)
         })
 })
 
 router.get('/:id', (req, res) => {
-    Dishes.find({id: req.params.id})
+    Dishes.find({_id: req.params.id})
         .then((result) => {
             res.send(result)
         })
         .catch((err) => {
+            res.status(404)
             console.log(err)
         })
 })
 
-router.post('/', (req, res) => {
-    const dish = new Dishes(req.body)
-    dish.save()
+router.get('/:id/comments', (req, res) => {
+    Dishes.find({_id: req.params.id})
         .then((result) => {
-            res.send(result)
+            res.json({
+                dish: result[0].name,
+                comments: result[0].comments
+            })
         })
         .catch((err) => {
+            res.status(404)
             console.log(err)
         })
 })
 
-router.put('/:id', (req, res) => {
 
-    Dishes.updateOne({id: req.params.id}, req.body)
+router.post('/:id/comments', authCheker, (req, res) => {
+    Dishes.find({_id: req.params.id})
         .then((result) => {
-            res.send(result)
+            const newComments = result[0].comments
+            newComments.push({
+                email: req.email,
+                body: req.body.body
+            })
+
+            Dishes.updateOne({_id: req.params.id}, {
+                name: result[0].name,
+                price: result[0].price,
+                comments: newComments
+            }).then((done) => {
+                res.json({
+                    message: 'Comment Added',
+                    done
+                })
+            }).catch((err) => {
+                res.json({
+                    message: 'Comment not Added',
+                    err
+                })
+            })
         })
         .catch((err) => {
+            res.json({
+                message: 'Dish not found',
+                err
+            })
+        })
+})
+
+router.delete('/:id/comments', authCheker, (req, res) => {
+    Dishes.find({_id: req.params.id})
+        .then((result) => {
+            let findComment = false;
+            result[0].comments.every((eachComment, index) => {
+                if (req.email === eachComment.email) {
+                    findComment = true
+                    result[0].comments.splice(index, 1)
+                    return false
+                }
+                return true
+            })
+            if (findComment) {
+                Dishes.updateOne({_id: req.params.id}, result[0])
+                    .then((done) => {
+                        res.json({
+                            message: "Successfully deleted your comment",
+                            done
+                        })
+                    }).catch((err) => {
+                    res.json({
+                        message: "err occurred",
+                        err
+                    })
+                })
+            }
+            if (!findComment) {
+                res.json({
+                    message: "You don't yet comment on this dish. You can't delete any comment"
+                })
+            }
+        })
+        .catch((err) => {
+            res.status(404)
             console.log(err)
         })
 })
 
-router.delete('/:id', (req, res) => {
 
-    Dishes.deleteOne({id: req.params.id})
-        .then((result) => {
-            res.send(result)
+router.post('/', authCheker, (req, res) => {
+    if (req.admin) {
+        const dish = new Dishes(req.body)
+        dish.save()
+            .then((result) => {
+                res.send(result)
+            })
+            .catch((err) => {
+                res.status(404)
+                console.log(err)
+            })
+    } else {
+        res.json({
+            message: "You aren't an admin and you have no permission to post..!"
         })
-        .catch((err) => {
-            console.log(err)
+    }
+})
+
+router.put('/:id', authCheker, (req, res) => {
+    if (req.admin) {
+        Dishes.updateOne({_id: req.params.id}, req.body)
+            .then((result) => {
+                res.send(result)
+            })
+            .catch((err) => {
+                res.status(404)
+                console.log(err)
+            })
+    } else {
+        res.json({
+            message: "You aren't an admin and you have no permission to update..!"
         })
+    }
+})
+
+router.delete('/:id', authCheker, (req, res) => {
+
+    if (req.admin) {
+        Dishes.deleteOne({_id: req.params.id})
+            .then((result) => {
+                res.send(result)
+            })
+            .catch((err) => {
+                res.status(404)
+                console.log(err)
+            })
+    } else {
+        res.json({
+            message: "You aren't an admin and you have no permission to delete..!",
+        })
+    }
 })
 
 module.exports = router
